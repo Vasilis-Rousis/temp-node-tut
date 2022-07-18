@@ -1,25 +1,20 @@
-const express = require('express');
-const app = express();
-const { products } = require('./data');
+const express = require('express')
+const app = express()
+
+// req => middleware => res
 
 app.get('/', (req, res) => {
-  res.send('<h1>Home Page</h1><a href="/api/products">Products</a>');
+  const method = req.method;
+  const url = req.url;
+  const time = new Date().getFullYear();
+  console.log(method, url, time);
+  res.send('Home')
 });
 
-app.get('/api/products/:productID', (req, res) => {
-
-  const {productID} = req.params;
-  const singleProduct = products.find(
-    product => product.id === Number(productID)
-  );
-
-  if (!singleProduct) {
-    res.status(404).send('Product not found');
-  }
-
-  res.json(singleProduct);
+app.get('/about', (req, res) => {
+  res.send('About')
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+app.listen(5000, () => {
+  console.log('Server is listening on port 5000....')
+})
